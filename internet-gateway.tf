@@ -3,5 +3,6 @@ resource "aws_internet_gateway" "demo_internet_gateway" {
 
   tags = "${merge(var.common_tags, map(
     "Name", "terraform-demo-internet-gateway",
+    "kubernetes.io/cluster/${var.cluster_name}", "owned",
   ))}"
 }

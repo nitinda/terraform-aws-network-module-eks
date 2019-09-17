@@ -1,4 +1,9 @@
-# VPC 
+# EKS
+variable "cluster_name" {
+  description = "Name of the cluster"
+}
+
+# VPC
 variable "cidr_block" {
   description = "The CIDR block for the VPC."
 }

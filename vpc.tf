@@ -4,5 +4,6 @@ resource "aws_vpc" "demo_vpc" {
 
   tags = "${merge(var.common_tags, map(
     "Name", "terraform-demo-vpc",
+    "kubernetes.io/cluster/${var.cluster_name}", "owned",
   ))}"
 }

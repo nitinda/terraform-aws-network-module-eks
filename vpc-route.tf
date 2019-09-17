@@ -9,7 +9,8 @@ resource "aws_route_table" "demo_route_table_public" {
   }
 
   tags = "${merge(var.common_tags, map(
-    "Name", "terraform-demo-ecs-route-table-public",
+    "Name", "terraform-demo-route-table-public",
+    "kubernetes.io/cluster/${var.cluster_name}", "owned",
   ))}"
 }
 
@@ -28,7 +29,8 @@ resource "aws_route_table" "demo_route_table_private" {
   vpc_id = "${aws_vpc.demo_vpc.id}"
 
   tags = "${merge(var.common_tags, map(
-    "Name", "terraform-demo-ecs-route-table-private-${count.index}",
+    "Name", "terraform-demo-route-table-private-${count.index}",
+    "kubernetes.io/cluster/${var.cluster_name}", "owned",
   ))}"
 }
 
@@ -50,18 +52,19 @@ resource "aws_route_table_association" "demo_route_table_association_private" {
 
 
 
-### Database Route Table
-resource "aws_route_table" "demo_route_table_db" {
-  vpc_id = "${aws_vpc.demo_vpc.id}"
+# ### Database Route Table
+# resource "aws_route_table" "demo_route_table_db" {
+#   vpc_id = "${aws_vpc.demo_vpc.id}"
 
-  tags = "${merge(var.common_tags, map(
-    "Name", "terraform-demo-ecs-route-table-db",
-  ))}"
-}
+#   tags = "${merge(var.common_tags, map(
+#     "Name", "terraform-demo-ecs-route-table-db",
+#     "kubernetes.io/cluster/${var.cluster_name}", "owned",
+#   ))}"
+# }
 
-### Database Route Table Associaion
-resource "aws_route_table_association" "demo_route_table_association_db" {
-  count          = "${length(var.db_subnets_cidr)}"
-  subnet_id      = "${element(aws_subnet.demo_subnet_db.*.id, count.index)}"
-  route_table_id = "${aws_route_table.demo_route_table_db.id}"
-}
+# ### Database Route Table Associaion
+# resource "aws_route_table_association" "demo_route_table_association_db" {
+#   count          = "${length(var.db_subnets_cidr)}"
+#   subnet_id      = "${element(aws_subnet.demo_subnet_db.*.id, count.index)}"
+#   route_table_id = "${aws_route_table.demo_route_table_db.id}"
+# }

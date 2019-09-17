@@ -6,5 +6,8 @@ resource "aws_subnet" "demo_subnet_private" {
 
   tags = "${merge(var.common_tags, map(
     "Name", "terraform-demo-subnet-private-${count.index}",
+    "kubernetes.io/cluster/${var.cluster_name}", "owned",
+    "kubernetes.io/role/internal-elb", "1",
+    "alb.ingress.kubernetes.io/scheme", "internal",
   ))}"
 }

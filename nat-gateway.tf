@@ -4,6 +4,7 @@ resource "aws_eip" "demo_epi" {
   
   tags = "${merge(var.common_tags, map(
     "Name", "terraform-demo-epi",
+    "kubernetes.io/cluster/${var.cluster_name}", "owned",
   ))}"
 }
 
@@ -15,5 +16,6 @@ resource "aws_nat_gateway" "demo_nat_gateway" {
 
   tags = "${merge(var.common_tags, map(
     "Name", "terraform-demo-nat-gateway-${count.index}",
+    "kubernetes.io/cluster/${var.cluster_name}", "owned",
   ))}"
 }
